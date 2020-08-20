@@ -4,6 +4,7 @@ import styles from "./Pomodoro.module.css";
 const Pomodoro: FunctionComponent = () => {
   const [title, setTitle] = useState("Let the countdown begin");
   const [timeLeft, setTimeLeft] = useState(25 * 60);
+  const [isRunning, setRunning] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | undefined>();
 
   const minutes: string = Math.floor(timeLeft / 60)
@@ -12,12 +13,12 @@ const Pomodoro: FunctionComponent = () => {
 
   const seconds: string = (timeLeft % 60).toString().padStart(2, "0");
 
-  const isRunning: boolean = timerRef.current !== undefined;
-
   const startTimer = () => {
     if (isRunning) {
       return;
     }
+
+    setRunning(true);
 
     timerRef.current = setInterval(() => {
       setTimeLeft((time) => {
@@ -30,9 +31,10 @@ const Pomodoro: FunctionComponent = () => {
 
   const stopTimer = () => {
     if (!isRunning) {
-      timerRef.current = undefined;
       return;
     }
+
+    setRunning(false);
 
     if (timerRef.current) {
       clearInterval(timerRef.current);
@@ -42,8 +44,8 @@ const Pomodoro: FunctionComponent = () => {
 
   const resetTimer = () => {
     if (timerRef.current) {
+      setRunning(false);
       clearInterval(timerRef.current);
-      timerRef.current = undefined;
       setTitle("Ready to go another round?");
       setTimeLeft(25 * 60);
     }
@@ -53,16 +55,22 @@ const Pomodoro: FunctionComponent = () => {
     <div className={styles.app}>
       <h2>{title}</h2>
 
-      <div className="timer">
+      <div className={`my-5 ${styles.timer}`}>
         <span>{minutes}</span>
         <span>:</span>
         <span>{seconds}</span>
       </div>
 
-      <div className="buttons">
-        <button onClick={startTimer}>Start</button>
-        <button onClick={stopTimer}>Stop</button>
-        <button onClick={resetTimer}>Reset</button>
+      <div className={`${styles.buttons}`}>
+        <button className={`btn btn-success mr-2`} onClick={startTimer}>
+          Start
+        </button>
+        <button className={`btn btn-warning mr-2`} onClick={stopTimer}>
+          Stop
+        </button>
+        <button className={`btn btn-secondary`} onClick={resetTimer}>
+          Reset
+        </button>
       </div>
     </div>
   );
