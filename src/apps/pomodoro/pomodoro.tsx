@@ -1,10 +1,10 @@
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent, useState, useRef } from "react";
 import styles from "./Pomodoro.module.css";
 
 const Pomodoro: FunctionComponent = () => {
   const [title, setTitle] = useState("Let the countdown begin");
-  const [timeLeft, setTimeLeft] = useState(1 * 60);
-  const timerRef = React.useRef<number | undefined>();
+  const [timeLeft, setTimeLeft] = useState(25 * 60);
+  const timerRef = useRef<NodeJS.Timeout | undefined>();
 
   const minutes: string = Math.floor(timeLeft / 60)
     .toString()
@@ -12,13 +12,41 @@ const Pomodoro: FunctionComponent = () => {
 
   const seconds: string = (timeLeft % 60).toString().padStart(2, "0");
 
+  const isRunning: boolean = timerRef.current !== undefined;
+
   const startTimer = () => {
-    setInterval(() => {
+    if (isRunning) {
+      return;
+    }
+
+    timerRef.current = setInterval(() => {
       setTimeLeft((time) => {
         if (time >= 1) return time - 1;
+        resetTimer();
         return time;
       });
     }, 1000);
+  };
+
+  const stopTimer = () => {
+    if (!isRunning) {
+      timerRef.current = undefined;
+      return;
+    }
+
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      setTitle("Keep it up");
+    }
+  };
+
+  const resetTimer = () => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = undefined;
+      setTitle("Ready to go another round?");
+      setTimeLeft(25 * 60);
+    }
   };
 
   return (
@@ -33,8 +61,8 @@ const Pomodoro: FunctionComponent = () => {
 
       <div className="buttons">
         <button onClick={startTimer}>Start</button>
-        <button>Stop</button>
-        <button>Reset</button>
+        <button onClick={stopTimer}>Stop</button>
+        <button onClick={resetTimer}>Reset</button>
       </div>
     </div>
   );
