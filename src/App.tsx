@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Home from "./home/Home";
-import Pomodoro from "./apps/pomodoro/pomodoro";
+import Pomodoro from "./apps/pomodoro/Pomodoro";
 
 const App: FunctionComponent = () => {
   return (
