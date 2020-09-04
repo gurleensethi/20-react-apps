@@ -1,14 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { Link, RouteComponentProps, useRouteMatch } from "react-router-dom";
 import path from "path";
-
-const apps: {
-  name: string;
-  path: string;
-}[] = [
-  { name: "Pomodoro", path: "pomodoro" },
-  { name: "Markdown Editor", path: "markdown-editor" },
-];
+import navigationMeta from "../common/navigation-meta";
 
 const Home: FunctionComponent<RouteComponentProps> = (props) => {
   const match = useRouteMatch();
@@ -16,13 +9,14 @@ const Home: FunctionComponent<RouteComponentProps> = (props) => {
   return (
     <div className="container p-5">
       <div className="list-group">
-        {apps.map((app) => {
+        {navigationMeta.map((navigation) => {
           return (
             <Link
+              key={navigation.path}
               className="list-group-item list-group-item-action"
-              to={path.join(match.path, app.path)}
+              to={path.join(match.path, navigation.path)}
             >
-              {app.name}
+              {navigation.name}
             </Link>
           );
         })}
