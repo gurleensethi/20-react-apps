@@ -6,13 +6,20 @@ interface TabProps {
   style?: React.CSSProperties;
 }
 
-const Tab: FunctionComponent<TabProps> = ({
+const Tab: FunctionComponent<React.HTMLProps<HTMLDivElement> & TabProps> = ({
   handleMouseMove,
   style,
   children,
+  className,
+  ...rest
 }) => {
+  console.log(`${styles.tab} ${className}`);
   return (
-    <div className={styles.tab} onMouseMove={handleMouseMove}>
+    <div
+      {...rest}
+      className={`${className} ${styles.tab}`}
+      onMouseMove={handleMouseMove}
+    >
       <div className={styles.highlight} style={style} />
       {children}
     </div>

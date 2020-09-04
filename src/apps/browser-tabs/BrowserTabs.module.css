@@ -36,6 +36,10 @@
   background-color: rgb(86, 67, 252);
 }
 
+.tab.active {
+  background-color: rgb(25, 0, 255);
+}
+
 .tab:hover .highlight {
   opacity: 0.2;
 }
