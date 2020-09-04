@@ -13,7 +13,6 @@ const Tab: FunctionComponent<React.HTMLProps<HTMLDivElement> & TabProps> = ({
   className,
   ...rest
 }) => {
-  console.log(`${styles.tab} ${className}`);
   return (
     <div
       {...rest}
