@@ -1,6 +1,7 @@
 import Pomodoro from "../apps/pomodoro/Pomodoro";
 import MarkdownEditor from "../apps/markdown-editor/MarkdownEditor";
 import BrowserTabs from "../apps/browser-tabs/BrowserTabs";
+import RockPaperScissors from "../apps/rock-paper-scissors/RockPaperScissors";
 
 const navigationMeta: {
   name: string;
@@ -21,6 +22,11 @@ const navigationMeta: {
     name: "Browser Tabs",
     path: "browser-tabs",
     component: BrowserTabs,
+  },
+  {
+    name: "Rock Paper Scissors",
+    path: "rock-paper-scissors",
+    component: RockPaperScissors,
   },
 ];
 
