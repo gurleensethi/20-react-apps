@@ -22,28 +22,38 @@ const RockPaperScissors: FunctionComponent = () => {
   const [computerChoice, setComputerChoice] = useState<Choice | null>(null);
   const [wins, setWins] = useState<number>(0);
   const [losses, setLosses] = useState<number>(0);
+  const [gameState, setGameState] = useState<string | null>(null);
 
   useEffect(() => {
     const randomChoice = choices[Math.floor(Math.random() * choices.length)];
     setComputerChoice(randomChoice);
   }, []);
 
+  useEffect(() => {
+    if (userChoice && computerChoice) {
+      if (userChoice.id === computerChoice.id) {
+      } else if (Math.abs(userChoice.id - computerChoice.id) === 1) {
+      } else {
+      }
+    }
+  }, [userChoice, computerChoice]);
+
   const handleUserChoice = useCallback((id: number) => {
     const choice = choices.find((choice) => choice.id === id);
-
     if (!choice) return alert("Something went wrong!");
-
     setUserChoice(choice);
+    setGameState("win");
   }, []);
 
   return (
     <div className={styles.app}>
+      {gameState && <div className={styles["game-state"]}>Test</div>}
       <div className={styles.info}>
         <h2>Rock. Paper. Scissors</h2>
         <div className={styles["wins-losses"]}>
           <div className={styles.wins}>
             <div className={styles.number}>{wins}</div>
-            <div className={styles.text}>Wins</div>
+            <div className={styles.text}>{wins === 1 ? "Win" : "Wins"}</div>
           </div>
           <div className={styles.losses}>
             <div className={styles.number}>{losses}</div>
