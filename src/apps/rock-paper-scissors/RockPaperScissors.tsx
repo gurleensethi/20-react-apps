@@ -9,12 +9,13 @@ import styles from "./RockPaperScissors.module.css";
 interface Choice {
   id: number;
   name: string;
+  losesTo: number[];
 }
 
 const choices: Choice[] = [
-  { id: 1, name: "rock" },
-  { id: 2, name: "paper" },
-  { id: 3, name: "scissors" },
+  { id: 1, name: "rock", losesTo: [2] },
+  { id: 2, name: "paper", losesTo: [3] },
+  { id: 3, name: "scissors", losesTo: [1] },
 ];
 
 const RockPaperScissors: FunctionComponent = () => {
@@ -24,30 +25,50 @@ const RockPaperScissors: FunctionComponent = () => {
   const [losses, setLosses] = useState<number>(0);
   const [gameState, setGameState] = useState<string | null>(null);
 
-  useEffect(() => {
+  const resetComputer = () => {
     const randomChoice = choices[Math.floor(Math.random() * choices.length)];
     setComputerChoice(randomChoice);
-  }, []);
+  };
 
   useEffect(() => {
-    if (userChoice && computerChoice) {
-      if (userChoice.id === computerChoice.id) {
-      } else if (Math.abs(userChoice.id - computerChoice.id) === 1) {
-      } else {
-      }
-    }
-  }, [userChoice, computerChoice]);
+    resetComputer();
+  }, []);
 
-  const handleUserChoice = useCallback((id: number) => {
+  const handleUserChoice = (id: number) => {
     const choice = choices.find((choice) => choice.id === id);
     if (!choice) return alert("Something went wrong!");
     setUserChoice(choice);
-    setGameState("win");
+
+    if (choice && computerChoice) {
+      if (choice.id === computerChoice.id) {
+        setGameState("draw");
+      } else if (choice.losesTo.find((item) => item === computerChoice.id)) {
+        setGameState("loss");
+        setLosses((losses) => losses + 1);
+      } else {
+        setWins((wins) => wins + 1);
+        setGameState("win");
+      }
+    }
+  };
+
+  const resetGameState = useCallback(() => {
+    setGameState(null);
+    setUserChoice(null);
+    resetComputer();
   }, []);
 
   return (
     <div className={styles.app}>
-      {gameState && <div className={styles["game-state"]}>Test</div>}
+      {gameState && (
+        <div className={`${styles["game-state"]}`} onClick={resetGameState}>
+          <div className={`${styles["content"]} ${styles[gameState]}`}>
+            {gameState.toUpperCase()}
+            <div>User: {userChoice?.name}</div>
+            <div>Computer: {computerChoice?.name}</div>
+          </div>
+        </div>
+      )}
       <div className={styles.info}>
         <h2>Rock. Paper. Scissors</h2>
         <div className={styles["wins-losses"]}>
@@ -69,6 +90,7 @@ const RockPaperScissors: FunctionComponent = () => {
               <button
                 className={`${styles.option} ${styles[choice.name]}`}
                 onClick={() => handleUserChoice(choice.id)}
+                key={choice.id}
               >
                 {choice.name}
               </button>
