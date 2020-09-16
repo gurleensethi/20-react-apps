@@ -1,6 +1,16 @@
 import React, { FunctionComponent, useEffect, useRef, useState } from "react";
 import styles from "./MovingLinkAcrossACanvas.module.css";
 
+const SPEED = 100;
+const BOX_SIZE = 100;
+
+enum MoveType {
+  Up = "Up",
+  Down = "Down",
+  Left = "Left",
+  Right = "Right",
+}
+
 const MovingLinkAcrossACanvas: FunctionComponent = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [x, setX] = useState<number>(0);
@@ -13,19 +23,45 @@ const MovingLinkAcrossACanvas: FunctionComponent = () => {
       context.canvas.height = window.innerHeight;
       context.canvas.width = window.innerWidth;
 
-      context.fillRect(x, y, 100, 100);
+      context.fillRect(x, y, BOX_SIZE, BOX_SIZE);
     }
   }, []);
+
+  useEffect(() => {
+    const context = canvasRef.current?.getContext("2d");
+
+    if (context) {
+      context.clearRect(0, 0, window.innerHeight, window.innerWidth);
+      context.fillRect(x, y, BOX_SIZE, BOX_SIZE);
+    }
+  }, [x, y]);
+
+  const handleMove = (moveType: MoveType) => {
+    switch (moveType) {
+      case MoveType.Up:
+        setY((y) => Math.max(0, y - SPEED));
+        break;
+      case MoveType.Down:
+        setY((y) => Math.min(y + SPEED, window.innerHeight - BOX_SIZE));
+        break;
+      case MoveType.Left:
+        setX((x) => Math.max(0, x - SPEED));
+        break;
+      case MoveType.Right:
+        setX((x) => Math.min(x + SPEED, window.innerWidth - BOX_SIZE));
+        break;
+    }
+  };
 
   return (
     <div className={styles.app}>
       <canvas ref={canvasRef} />
 
       <div className={styles.arrows}>
-        <button onClick={() => setY((y) => y + 20)}>Up</button>
-        <button onClick={() => setX((x) => x - 20)}>Left</button>
-        <button onClick={() => setY((y) => y + 20)}>Down</button>
-        <button onClick={() => setX((x) => x + 20)}>Right</button>
+        <button onClick={() => handleMove(MoveType.Up)}>Up</button>
+        <button onClick={() => handleMove(MoveType.Left)}>Left</button>
+        <button onClick={() => handleMove(MoveType.Down)}>Down</button>
+        <button onClick={() => handleMove(MoveType.Right)}>Right</button>
       </div>
     </div>
   );
