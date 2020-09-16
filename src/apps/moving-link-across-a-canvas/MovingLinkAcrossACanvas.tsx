@@ -16,6 +16,8 @@ const MovingLinkAcrossACanvas: FunctionComponent = () => {
   const [x, setX] = useState<number>(0);
   const [y, setY] = useState<number>(0);
 
+  console.log(x, y);
+
   useEffect(() => {
     const context = canvasRef.current?.getContext("2d");
 
@@ -23,15 +25,39 @@ const MovingLinkAcrossACanvas: FunctionComponent = () => {
       context.canvas.height = window.innerHeight;
       context.canvas.width = window.innerWidth;
 
-      context.fillRect(x, y, BOX_SIZE, BOX_SIZE);
+      context.fillRect(0, 0, BOX_SIZE, BOX_SIZE);
     }
+  }, []);
+
+  useEffect(() => {
+    const listener = (e: KeyboardEvent) => {
+      const { keyCode } = e;
+
+      switch (keyCode) {
+        case 37:
+          handleMove(MoveType.Left);
+          break;
+        case 39:
+          handleMove(MoveType.Right);
+          break;
+        case 38:
+          handleMove(MoveType.Up);
+          break;
+        case 40:
+          handleMove(MoveType.Down);
+          break;
+      }
+    };
+
+    window.addEventListener("keydown", listener);
+    return () => window.removeEventListener("keydown", listener);
   }, []);
 
   useEffect(() => {
     const context = canvasRef.current?.getContext("2d");
 
     if (context) {
-      context.clearRect(0, 0, window.innerHeight, window.innerWidth);
+      context.clearRect(0, 0, window.innerWidth, window.innerHeight);
       context.fillRect(x, y, BOX_SIZE, BOX_SIZE);
     }
   }, [x, y]);
