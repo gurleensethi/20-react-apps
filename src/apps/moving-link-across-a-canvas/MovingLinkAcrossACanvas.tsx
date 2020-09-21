@@ -31,19 +31,19 @@ const MovingLinkAcrossACanvas: FunctionComponent = () => {
 
   useEffect(() => {
     const listener = (e: KeyboardEvent) => {
-      const { keyCode } = e;
+      const { key } = e;
 
-      switch (keyCode) {
-        case 37:
+      switch (key) {
+        case "ArrowLeft":
           handleMove(MoveType.Left);
           break;
-        case 39:
+        case "ArrowRight":
           handleMove(MoveType.Right);
           break;
-        case 38:
+        case "ArrowUp":
           handleMove(MoveType.Up);
           break;
-        case 40:
+        case "ArrowDown":
           handleMove(MoveType.Down);
           break;
       }
