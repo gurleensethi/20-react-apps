@@ -16,8 +16,6 @@ const MovingLinkAcrossACanvas: FunctionComponent = () => {
   const [x, setX] = useState<number>(0);
   const [y, setY] = useState<number>(0);
 
-  console.log(x, y);
-
   useEffect(() => {
     const context = canvasRef.current?.getContext("2d");
 
