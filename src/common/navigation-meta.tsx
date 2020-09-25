@@ -3,6 +3,7 @@ import MarkdownEditor from "../apps/markdown-editor/MarkdownEditor";
 import BrowserTabs from "../apps/browser-tabs/BrowserTabs";
 import RockPaperScissors from "../apps/rock-paper-scissors/RockPaperScissors";
 import MovingLinkAcrossACanvas from "../apps/moving-link-across-a-canvas/MovingLinkAcrossACanvas";
+import InfiniteImageGallery from "../apps/infinite-image-gallery/InfiniteImageGallery";
 
 const navigationMeta: {
   name: string;
@@ -33,6 +34,11 @@ const navigationMeta: {
     name: "Moving Link Across a Canvas",
     path: "moving-link-across-a-canvas",
     component: MovingLinkAcrossACanvas,
+  },
+  {
+    name: "Infinite Image Gallery",
+    path: "infinite-image-gallery",
+    component: InfiniteImageGallery,
   },
 ];
 

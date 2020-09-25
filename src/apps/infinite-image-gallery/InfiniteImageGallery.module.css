@@ -1,0 +1,105 @@
+.app {
+  background-color: rgb(194, 194, 194);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+}
+
+.app h1 {
+  color: rgb(153, 153, 153);
+}
+
+.app form {
+  margin: 40px 00px;
+}
+
+.app form input {
+  border: none;
+  outline: none;
+  background-color: white;
+  border-radius: 40px;
+  padding: 16px 24px;
+  font-size: 20px;
+  margin-right: 16px;
+}
+
+.app form button {
+  background-color: black;
+  border: none;
+  outline: none;
+  color: white;
+  padding: 16px 24px;
+  font-size: 20px;
+  border-radius: 40px;
+}
+
+.top-bar {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  padding: 4px;
+  transition: all 0.3s;
+}
+
+.enter-api-key-btn {
+  border: none;
+  background: white;
+  opacity: 0.5;
+  border-radius: 40px;
+  padding: 4px 12px;
+  transition: all 0.3s;
+}
+
+.enter-api-key-btn:hover {
+  opacity: 1;
+}
+
+.enter-api-key-btn:hover ~ .api-key-form {
+  visibility: visible;
+  opacity: 1;
+}
+
+.api-key-form {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  transition: 0.3s;
+}
+
+.api-key-form:hover {
+  opacity: 1;
+  visibility: visible;
+}
+
+.image-grid {
+  display: grid;
+  grid-gap: 15px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-auto-rows: minmax(50px, 200px);
+}
+
+.image {
+  background-color: white;
+  padding: 3px;
+  border-radius: 3px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: 0.3s;
+}
+
+.image:hover {
+  transform: translateY(-2px);
+}
+
+.image img {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image:nth-child(6n) {
+  grid-column-end: span 5;
+}
