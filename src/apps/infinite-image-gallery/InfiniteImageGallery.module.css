@@ -5,6 +5,7 @@
   flex-direction: column;
   align-items: center;
   height: 100vh;
+  overflow-y: auto;
 }
 
 .app h1 {
@@ -25,7 +26,8 @@
   margin-right: 16px;
 }
 
-.app form button {
+.app form button,
+.view-more-btn {
   background-color: black;
   border: none;
   outline: none;
@@ -102,4 +104,19 @@
 
 .image:nth-child(6n) {
   grid-column-end: span 5;
+}
+
+.view-more-btn {
+  font-size: 16px;
+  padding: 12px 24px;
+  transition: box-shadow 0.3s;
+}
+
+.view-more-btn:hover {
+  box-shadow: 2px 2px 4px grey, 1px 1px 4px grey;
+}
+
+.footer {
+  padding: 40px;
+  color: black;
 }
