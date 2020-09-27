@@ -1,4 +1,3 @@
-import { queryByRole } from "@testing-library/react";
 import React, {
   FunctionComponent,
   useEffect,
@@ -81,7 +80,7 @@ const InfiniteImageGallery: FunctionComponent = () => {
   const [apiKey, setApiKey] = useState<string>("");
   const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
   const [photosData, dispatch] = useReducer<PhotosReducer>(photosReducer, {
-    isLoading: true,
+    isLoading: false,
     pageCount: 1,
     photos: [],
   });
@@ -175,7 +174,7 @@ const InfiniteImageGallery: FunctionComponent = () => {
 
       <div className={styles["footer"]}>
         {isLoading && <div>Loading...</div>}
-        {!isLoading && (
+        {!isLoading && !!photos.length && (
           <button
             className={styles["view-more-btn"]}
             onClick={() => loadNextPage(query)}
